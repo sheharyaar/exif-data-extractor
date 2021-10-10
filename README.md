@@ -1,6 +1,7 @@
 # EXIF
 
-This is my project to extract Base , EXIF and GPS data if available from images.
+This is my project to extract Base , EXIF and GPS data if available from images.<br />
+⚠️ This Code runs in POSIX based systems only!
 
 ## Compiling and Running
 
