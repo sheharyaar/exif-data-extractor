@@ -384,7 +384,7 @@ void print_ifd(struct IFD *ifd)
 
 		if(dir[i].type == 9){
 			for(int j = 0 ; j < count ; j++ )
-				printf("%d  SIGNED_LONG!!!!!!!!!",((int32_t *)dir[i].data.val)[j]);
+				printf("%d ",((int32_t *)dir[i].data.val)[j]);
 		}
 	
 		if(dir[i].type == 10){
@@ -399,18 +399,18 @@ void print_ifd(struct IFD *ifd)
 				}
 
 				float val = (float)numerator / (float)denominator;
-				printf("%f SIGNED_RATIONAL!!!!!!",val);
+				printf("%f ",val);
 			}
 		}
 
 		if(dir[i].type == 11){
 			for(int j = 0 ; j < count ; j++ )
-				printf("%f  FLOAT!!!!!!!!!",((float *)dir[i].data.val)[j]);
+				printf("%f ",((float *)dir[i].data.val)[j]);
 		}
 
 		if(dir[i].type == 12){
 			for(int j = 0 ; j < count ; j++ )
-				printf("%lf  DOUBLE!!!!!!!!!",((double *)dir[i].data.val)[j]);
+				printf("%lf ",((double *)dir[i].data.val)[j]);
 		}
 
 		printf("\n");
