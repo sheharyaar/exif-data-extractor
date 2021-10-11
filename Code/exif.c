@@ -1,5 +1,8 @@
-/* BUG IN CODE:
- * 	Didn't work with IMGXYZ file
+/* 
+ * 	Code to Extract EXIF Data from image files.
+ * 	Author - Mohammad Shehar Yaar Tausif
+ *
+ *	License : MIT
  */
 #include "exif.h"
 
