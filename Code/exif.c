@@ -9,6 +9,9 @@
 static int machine_order;
 static int exif_order;
 
+static int BASE_OFF;
+
+static uint32_t app1_offset = 0;
 static uint32_t tiff_offset = 0;
 static uint32_t exif_offset = 0;
 static uint32_t gps_offset = 0;
@@ -63,9 +66,8 @@ int main(int argc, char *argv[])
 	}
 	
 /* As we read total 4 bytes till here, we need to go back 2 bytes to input app1 header marker (ffe1) */
-
-	fseek(fp,2,SEEK_SET);
-
+	BASE_OFF = app1_offset + 10;
+	fseek(fp,app1_offset,SEEK_SET);
 
 /* Take EXIF header */
 
@@ -126,6 +128,7 @@ int check_image(FILE* fp)
 	if(memcmp((void *)buf,(void *)temp,sizeof(buf)) == 0){
 		return TRUE;
 	}
+	
 
 	return FALSE;
 }
@@ -136,13 +139,19 @@ int check_img_format(FILE* fp)
 	unsigned char buf[2];
 	unsigned char exif[] = {0xff,EXIF};
 	
-	data = fread(&buf,sizeof(buf),1,fp);
-	if(data<=0)
-		return FALSE;
+	/* debugging*/
 
-	if(memcmp((void *)buf,(void *)exif,sizeof(buf)) == 0)
-		return TRUE;
+	while(data>0){
+		data = fread(&buf,sizeof(buf),1,fp);
+		if(data<=0)
+			return FALSE;
 
+		if(memcmp((void *)buf,(void *)exif,sizeof(buf)) == 0){
+			app1_offset = ftell(fp)-2;
+			return TRUE;
+		}
+
+	}
 	return FALSE;
 }
 
@@ -249,7 +258,7 @@ void get_ifd(FILE *fp, struct IFD *ifd, uint32_t offset)
 			gps_offset = dir->offset;
 		}
 
-	}
+}
 
 	get_data(fp,&(ifd->offset),sizeof(ifd->offset),1);
 

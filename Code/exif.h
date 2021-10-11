@@ -26,7 +26,6 @@
 #define BIG 1 
 #define LIL 0
 
-#define BASE_OFF 12
 #define MAX_TAG_LEN 255
 
 /*
